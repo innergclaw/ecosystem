@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INNERG INTEL — Become Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --bg: #000000;
+      --bg-secondary: #0a0a0a;
+      --bg-tertiary: #111111;
+      --text: #ffffff;
+      --text-muted: #666666;
+      --text-dim: #333333;
+      --accent: #00ff88;
+      --accent-dim: #00cc6a;
+      --border: #1a1a1a;
+      --orange: #ff6b35;
+      --purple: #a855f7;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    
+    /* Grid lines */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .container {
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Header */
+    header {
+      padding: 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .logo-mark {
+      width: 48px;
+      height: 48px;
+      border: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .logo-mark::after {
+      content: '';
+      width: 16px;
+      height: 16px;
+      background: var(--accent);
+    }
+    
+    .logo-text {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+    
+    .logo-text span {
+      color: var(--accent);
+    }
+    
+    .header-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+    }
+    
+    /* Hero */
+    .hero {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 48px;
+      position: relative;
+    }
+    
+    .hero-content {
+      max-width: 900px;
+    }
+    
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .hero-eyebrow::before {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+    }
+    
+    .hero h1 {
+      font-size: 96px;
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -4px;
+      margin-bottom: 32px;
+    }
+    
+    .hero h1 .outline {
+      -webkit-text-stroke: 2px var(--text);
+      color: transparent;
+    }
+    
+    .hero h1 .accent {
+      color: var(--accent);
+    }
+    
+    .hero-description {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 500px;
+      line-height: 1.8;
+      margin-bottom: 48px;
+    }
+    
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--accent);
+      color: var(--bg);
+      padding: 16px 32px;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    .hero-cta:hover {
+      background: var(--text);
+      transform: translateX(8px);
+    }
+    
+    .hero-cta svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s;
+    }
+    
+    .hero-cta:hover svg {
+      transform: translateX(4px);
+    }
+    
+    /* Stats bar */
+    .stats-bar {
+      display: flex;
+      gap: 64px;
+      padding: 48px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .stat-value {
+      font-family: 'Space Mono', monospace;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    
+    /* Ecosystem Grid */
+    .ecosystem {
+      padding: 96px 48px;
+    }
+    
+    .section-header {
+      margin-bottom: 64px;
+    }
+    
+    .section-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    
+    .section-title {
+      font-size: 48px;
+      font-weight: 900;
+      letter-spacing: -2px;
+    }
+    
+    .ecosystem-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    
+    .eco-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 320px;
+    }
+    
+    .eco-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, transparent 0%, rgba(0, 255, 136, 0.05) 100%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    
+    .eco-card:hover::before {
+      opacity: 1;
+    }
+    
+    .eco-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+    
+    .eco-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 32px;
+    }
+    
+    .eco-icon {
+      width: 64px;
+      height: 64px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      transition: all 0.4s;
+    }
+    
+    .eco-card:hover .eco-icon {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: var(--bg);
+    }
+    
+    .eco-index {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 2px;
+    }
+    
+    .eco-title {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    
+    .eco-description {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+    
+    .eco-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    
+    .eco-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    
+    .eco-card:hover .eco-tag {
+      border-color: rgba(0, 255, 136, 0.3);
+    }
+    
+    .eco-arrow {
+      position: absolute;
+      bottom: 48px;
+      right: 48px;
+      width: 48px;
+      height: 48px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s;
+      opacity: 0;
+    }
+    
+    .eco-card:hover .eco-arrow {
+      opacity: 1;
+      border-color: var(--accent);
+    }
+    
+    /* CTA Section */
+    .cta-section {
+      padding: 96px 48px;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+    }
+    
+    .cta-content {
+      max-width: 600px;
+    }
+    
+    .cta-content h2 {
+      font-size: 48px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+    
+    .cta-content p {
+      color: var(--text-muted);
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+    }
+    
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      padding: 16px 32px;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary:hover {
+      background: var(--text);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      padding: 16px 32px;
+      border: 1px solid var(--border);
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    .btn-secondary:hover {
+      border-color: var(--accent);
+    }
+    
+    /* Footer */
+    footer {
+      padding: 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .footer-text {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+    }
+    
+    .footer-links {
+      display: flex;
+      gap: 32px;
+    }
+    
+    .footer-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero h1 { font-size: 64px; }
+      .ecosystem-grid { grid-template-columns: 1fr; }
+    }
+    
+    @media (max-width: 768px) {
+      header { padding: 24px; }
+      .hero { padding: 0 24px; }
+      .hero h1 { font-size: 48px; }
+      .stats-bar { flex-direction: column; gap: 32px; padding: 32px 24px; }
+      .ecosystem { padding: 64px 24px; }
+      .eco-card { padding: 32px; min-height: auto; }
+      .cta-section { padding: 64px 24px; }
+      .cta-content h2 { font-size: 32px; }
+      footer { flex-direction: column; gap: 24px; text-align: center; }
+      .footer-links { flex-direction: column; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="logo">
+        <div class="logo-mark"></div>
+        <div class="logo-text">INNERG <span>INTEL</span></div>
+      </div>
+      <div class="header-tag">ECOSYSTEM v1.0</div>
+    </header>
+    
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-eyebrow">Become Intelligence</div>
+        <h1>
+          <span class="outline">BUILD</span><br>
+          <span class="accent">INTELLIGENCE</span>
+        </h1>
+        <p class="hero-description">
+          An ecosystem of tools, education, and content designed to help you master AI, build digital assets, and own your future.
+        </p>
+        <a href="#ecosystem" class="hero-cta">
+          EXPLORE ECOSYSTEM
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+    
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-value">4</div>
+        <div class="stat-label">Active Projects</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">AI</div>
+        <div class="stat-label">First Priority</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">2028</div>
+        <div class="stat-label">Exit Target</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">24/7</div>
+        <div class="stat-label">Building</div>
+      </div>
+    </div>
+    
+    <!-- Ecosystem -->
+    <section class="ecosystem" id="ecosystem">
+      <div class="section-header">
+        <div class="section-eyebrow">// THE ECOSYSTEM</div>
+        <h2 class="section-title">What We're Building</h2>
+      </div>
+      
+      <div class="ecosystem-grid">
+        <!-- InnerG Learn -->
+        <a href="https://innergclaw.github.io/innerg-learn/" class="eco-card" target="_blank">
+          <div class="eco-card-header">
+            <div class="eco-icon">🎓</div>
+            <div class="eco-index">01</div>
+          </div>
+          <div>
+            <h3 class="eco-title">InnerG Learn</h3>
+            <p class="eco-description">AI education and training. 1-on-1 sessions, school workshops, workplace training. Learn to actually use AI — not theory.</p>
+            <div class="eco-tags">
+              <span class="eco-tag">Education</span>
+              <span class="eco-tag">AI Training</span>
+              <span class="eco-tag">B2B</span>
+            </div>
+          </div>
+          <div class="eco-arrow">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </a>
+        
+        <!-- OwnYourWeb -->
+        <a href="https://innergclaw.github.io/ownyourweb-landing/" class="eco-card" target="_blank">
+          <div class="eco-card-header">
+            <div class="eco-icon">🌐</div>
+            <div class="eco-index">02</div>
+          </div>
+          <div>
+            <h3 class="eco-title">OwnYourWeb</h3>
+            <p class="eco-description">Professional web design and development. Landing pages, business sites, portfolio sites. Clean, modern, built to convert.</p>
+            <div class="eco-tags">
+              <span class="eco-tag">Web Design</span>
+              <span class="eco-tag">Development</span>
+              <span class="eco-tag">Branding</span>
+            </div>
+          </div>
+          <div class="eco-arrow">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </a>
+        
+        <!-- Bro to Bro -->
+        <a href="https://innergclaw.github.io/bro-to-bro/" class="eco-card" target="_blank">
+          <div class="eco-card-header">
+            <div class="eco-icon">✊</div>
+            <div class="eco-index">03</div>
+          </div>
+          <div>
+            <h3 class="eco-title">Bro to Bro</h3>
+            <p class="eco-description">Raw thoughts. Real experience. Short reads for men building something. No fluff, just perspective.</p>
+            <div class="eco-tags">
+              <span class="eco-tag">Content</span>
+              <span class="eco-tag">Men</span>
+              <span class="eco-tag">Mindset</span>
+            </div>
+          </div>
+          <div class="eco-arrow">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </a>
+        
+        <!-- InnerG Dashboard (Placeholder) -->
+        <div class="eco-card" style="opacity: 0.5; cursor: not-allowed;">
+          <div class="eco-card-header">
+            <div class="eco-icon">📊</div>
+            <div class="eco-index">04</div>
+          </div>
+          <div>
+            <h3 class="eco-title">InnerG Dashboard</h3>
+            <p class="eco-description">Coming soon. AI-powered business dashboard. Track leads, automate workflows, manage your ecosystem from one place.</p>
+            <div class="eco-tags">
+              <span class="eco-tag">Coming Soon</span>
+              <span class="eco-tag">Automation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="cta-content">
+        <h2>Ready to Build?</h2>
+        <p>Whether you need AI training, a new website, or just some perspective — we're here. Let's build something together.</p>
+        <div class="cta-buttons">
+          <a href="mailto:innergclaw@gmail.com" class="btn-primary">GET IN TOUCH</a>
+          <a href="https://innergclaw.github.io/innerg-learn/" class="btn-secondary" target="_blank">START LEARNING</a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+      <div class="footer-text">© 2026 INNERG INTEL — BECOME INTELLIGENCE</div>
+      <div class="footer-links">
+        <a href="mailto:innergclaw@gmail.com">Email</a>
+        <a href="https://innergclaw.github.io/innerg-learn/">Learn</a>
+        <a href="https://innergclaw.github.io/ownyourweb-landing/">Web</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
