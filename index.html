@@ -10,15 +10,15 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     :root {
-      --bg: #000000;
-      --bg-secondary: #0a0a0a;
-      --bg-tertiary: #111111;
-      --text: #ffffff;
+      --bg: #ffffff;
+      --bg-secondary: #f8f8f8;
+      --bg-tertiary: #f0f0f0;
+      --text: #0a0a0a;
       --text-muted: #666666;
-      --text-dim: #333333;
-      --accent: #00ff88;
-      --accent-dim: #00cc6a;
-      --border: #1a1a1a;
+      --text-dim: #999999;
+      --accent: #00cc6a;
+      --accent-dim: #00aa55;
+      --border: #e5e5e5;
       --orange: #ff6b35;
       --purple: #a855f7;
     }
@@ -31,21 +31,7 @@
       overflow-x: hidden;
     }
     
-    /* Noise overlay */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-      opacity: 0.03;
-      pointer-events: none;
-      z-index: 9999;
-    }
-    
-    /* Grid lines */
+    /* Subtle grid lines */
     body::after {
       content: '';
       position: fixed;
@@ -54,8 +40,8 @@
       right: 0;
       bottom: 0;
       background-image: 
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+        linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
       background-size: 80px 80px;
       pointer-events: none;
       z-index: 0;
@@ -196,12 +182,10 @@
     
     .hero-cta:hover {
       background: var(--text);
-      transform: translateX(8px);
+      color: var(--bg);
     }
     
     .hero-cta svg {
-      width: 16px;
-      height: 16px;
       transition: transform 0.3s;
     }
     
@@ -209,26 +193,25 @@
       transform: translateX(4px);
     }
     
-    /* Stats bar */
+    /* Stats Bar */
     .stats-bar {
       display: flex;
-      gap: 64px;
+      justify-content: space-between;
       padding: 48px;
-      border-top: 1px solid var(--border);
+      background: var(--bg-secondary);
       border-bottom: 1px solid var(--border);
     }
     
-    .stat {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .stat-item {
+      text-align: center;
     }
     
-    .stat-value {
+    .stat-number {
       font-family: 'Space Mono', monospace;
-      font-size: 32px;
+      font-size: 48px;
       font-weight: 700;
-      color: var(--accent);
+      color: var(--text);
+      line-height: 1;
     }
     
     .stat-label {
@@ -236,6 +219,7 @@
       color: var(--text-muted);
       letter-spacing: 2px;
       text-transform: uppercase;
+      margin-top: 8px;
     }
     
     /* Ecosystem Grid */
@@ -243,23 +227,23 @@
       padding: 96px 48px;
     }
     
-    .section-header {
-      margin-bottom: 64px;
-    }
-    
-    .section-eyebrow {
+    .section-title {
       font-family: 'Space Mono', monospace;
       font-size: 11px;
-      color: var(--accent);
+      color: var(--text-muted);
       letter-spacing: 4px;
       text-transform: uppercase;
-      margin-bottom: 16px;
+      margin-bottom: 48px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
     
-    .section-title {
-      font-size: 48px;
-      font-weight: 900;
-      letter-spacing: -2px;
+    .section-title::before {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
     }
     
     .ecosystem-grid {
@@ -273,33 +257,16 @@
       border: 1px solid var(--border);
       padding: 48px;
       position: relative;
-      overflow: hidden;
-      transition: all 0.4s;
-      text-decoration: none;
-      color: var(--text);
+      min-height: 280px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      min-height: 320px;
-    }
-    
-    .eco-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, transparent 0%, rgba(0, 255, 136, 0.05) 100%);
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-    
-    .eco-card:hover::before {
-      opacity: 1;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.4s;
     }
     
     .eco-card:hover {
+      background: var(--bg-tertiary);
       border-color: var(--accent);
       transform: translateY(-4px);
     }
@@ -308,24 +275,11 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 32px;
+      margin-bottom: 24px;
     }
     
     .eco-icon {
-      width: 64px;
-      height: 64px;
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      transition: all 0.4s;
-    }
-    
-    .eco-card:hover .eco-icon {
-      border-color: var(--accent);
-      background: var(--accent);
-      color: var(--bg);
+      font-size: 32px;
     }
     
     .eco-index {
@@ -336,7 +290,7 @@
     }
     
     .eco-title {
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 700;
       letter-spacing: -1px;
       margin-bottom: 16px;
@@ -346,7 +300,8 @@
       color: var(--text-muted);
       font-size: 15px;
       line-height: 1.7;
-      margin-bottom: 32px;
+      margin-bottom: 24px;
+      max-width: 400px;
     }
     
     .eco-tags {
@@ -366,7 +321,7 @@
     }
     
     .eco-card:hover .eco-tag {
-      border-color: rgba(0, 255, 136, 0.3);
+      border-color: rgba(0, 204, 106, 0.3);
     }
     
     .eco-arrow {
@@ -391,8 +346,8 @@
     /* CTA Section */
     .cta-section {
       padding: 96px 48px;
-      background: var(--bg-secondary);
-      border-top: 1px solid var(--border);
+      background: var(--text);
+      color: var(--bg);
     }
     
     .cta-content {
@@ -407,7 +362,7 @@
     }
     
     .cta-content p {
-      color: var(--text-muted);
+      color: rgba(255,255,255,0.7);
       font-size: 18px;
       line-height: 1.8;
       margin-bottom: 32px;
@@ -432,14 +387,15 @@
     }
     
     .btn-primary:hover {
-      background: var(--text);
+      background: var(--bg);
+      color: var(--text);
     }
     
     .btn-secondary {
       background: transparent;
-      color: var(--text);
+      color: var(--bg);
       padding: 16px 32px;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255,255,255,0.3);
       font-family: 'Space Mono', monospace;
       font-size: 12px;
       font-weight: 700;
@@ -515,23 +471,20 @@
         <div class="logo-mark"></div>
         <div class="logo-text">INNERG <span>INTEL</span></div>
       </div>
-      <div class="header-tag">ECOSYSTEM v1.0</div>
+      <div class="header-tag">Become Intelligence</div>
     </header>
     
     <!-- Hero -->
     <section class="hero">
       <div class="hero-content">
-        <div class="hero-eyebrow">Become Intelligence</div>
-        <h1>
-          <span class="outline">BUILD</span><br>
-          <span class="accent">INTELLIGENCE</span>
-        </h1>
+        <div class="hero-eyebrow">Digital Strategy // Creative Vision</div>
+        <h1>BUILD <span class="outline">YOUR</span><br><span class="accent">ECOSYSTEM</span></h1>
         <p class="hero-description">
-          An ecosystem of tools, education, and content designed to help you master AI, build digital assets, and own your future.
+          AI-powered creation. Strategic branding. Digital infrastructure for operators who move with intention.
         </p>
         <a href="#ecosystem" class="hero-cta">
           EXPLORE ECOSYSTEM
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </a>
@@ -539,32 +492,28 @@
     </section>
     
     <!-- Stats -->
-    <div class="stats-bar">
-      <div class="stat">
-        <div class="stat-value">5</div>
+    <section class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-number">5</div>
         <div class="stat-label">Active Projects</div>
       </div>
-      <div class="stat">
-        <div class="stat-value">AI</div>
-        <div class="stat-label">First Priority</div>
+      <div class="stat-item">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Live Sites</div>
       </div>
-      <div class="stat">
-        <div class="stat-value">∞</div>
-        <div class="stat-label">Long Term</div>
+      <div class="stat-item">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Possibilities</div>
       </div>
-      <div class="stat">
-        <div class="stat-value">24/7</div>
-        <div class="stat-label">Building</div>
+      <div class="stat-item">
+        <div class="stat-number">24/7</div>
+        <div class="stat-label">AI-Powered</div>
       </div>
-    </div>
+    </section>
     
     <!-- Ecosystem -->
     <section class="ecosystem" id="ecosystem">
-      <div class="section-header">
-        <div class="section-eyebrow">// THE ECOSYSTEM</div>
-        <h2 class="section-title">What We're Building</h2>
-      </div>
-      
+      <h2 class="section-title">The Ecosystem</h2>
       <div class="ecosystem-grid">
         <!-- InnerG Learn -->
         <a href="https://innergclaw.github.io/innerg-learn/" class="eco-card" target="_blank">
@@ -574,11 +523,11 @@
           </div>
           <div>
             <h3 class="eco-title">InnerG Learn</h3>
-            <p class="eco-description">AI education for real people. 1-on-1 coaching, school workshops, workplace training. Learn to actually use AI — not theory, just practical skills.</p>
+            <p class="eco-description">AI education platform. Courses, tutorials, and resources for mastering AI-powered creation and digital strategy.</p>
             <div class="eco-tags">
               <span class="eco-tag">Education</span>
-              <span class="eco-tag">AI Training</span>
-              <span class="eco-tag">B2B</span>
+              <span class="eco-tag">AI</span>
+              <span class="eco-tag">Courses</span>
             </div>
           </div>
           <div class="eco-arrow">
