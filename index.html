@@ -449,6 +449,37 @@
       .ecosystem-grid { grid-template-columns: 1fr; }
     }
     
+    .ecosystem-counter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 48px;
+      padding: 24px 40px;
+      background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 204, 255, 0.1));
+      border-radius: 16px;
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      display: inline-flex;
+    }
+    
+    .counter-number {
+      font-size: 64px;
+      font-weight: 800;
+      color: #00ff88;
+      font-family: 'Inter', sans-serif;
+      line-height: 1;
+      min-width: 80px;
+      text-align: center;
+    }
+    
+    .counter-text {
+      font-size: 24px;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    
     @media (max-width: 768px) {
       header { padding: 24px; }
       .hero { padding: 0 24px; }
@@ -514,6 +545,10 @@
     <!-- Ecosystem -->
     <section class="ecosystem" id="ecosystem">
       <h2 class="section-title">The Ecosystem</h2>
+      <div class="ecosystem-counter">
+        <span class="counter-number" id="siteCounter">0</span>
+        <span class="counter-text">Active Sites</span>
+      </div>
       <div class="ecosystem-grid">
         <!-- InnerG Learn -->
         <a href="https://innergclaw.github.io/innerg-learn/" class="eco-card" target="_blank">
@@ -672,5 +707,37 @@
       </div>
     </footer>
   </div>
+  <script>
+    // Animated counter
+    function animateCounter() {
+      const counter = document.getElementById('siteCounter');
+      const target = 6;
+      const duration = 2000; // 2 seconds
+      const start = 0;
+      const startTime = performance.now();
+      
+      function updateCounter(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Easing function for smooth animation
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        const current = Math.floor(start + (target - start) * easeOutQuart);
+        
+        counter.textContent = current;
+        
+        if (progress < 1) {
+          requestAnimationFrame(updateCounter);
+        } else {
+          counter.textContent = target;
+        }
+      }
+      
+      requestAnimationFrame(updateCounter);
+    }
+    
+    // Start animation when page loads
+    window.addEventListener('load', animateCounter);
+  </script>
 </body>
 </html>
