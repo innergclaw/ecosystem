@@ -315,6 +315,110 @@
       border-color: var(--accent);
     }
     
+    /* Knowledge Vault */
+    .knowledge-vault {
+      padding: 96px 48px;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+    }
+    
+    .vault-subtitle {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 500px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+    
+    .vault-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+    
+    .vault-category {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 32px;
+    }
+    
+    .vault-cat-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .vault-cat-icon {
+      font-size: 24px;
+    }
+    
+    .vault-cat-header h3 {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    
+    .vault-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .vault-link {
+      display: block;
+      padding: 16px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s;
+    }
+    
+    .vault-link:hover {
+      border-color: var(--accent);
+      background: var(--bg-secondary);
+      transform: translateX(4px);
+    }
+    
+    .vault-link-title {
+      display: block;
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    
+    .vault-link:hover .vault-link-title {
+      color: var(--accent);
+    }
+    
+    .vault-link-source {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    
+    .vault-link-desc {
+      display: block;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    
+    .vault-empty {
+      color: var(--text-dim);
+      font-size: 13px;
+      font-style: italic;
+      padding: 8px 0;
+    }
+
     /* CTA Section */
     .cta-section {
       padding: 96px 48px;
@@ -457,6 +561,8 @@
 
       .ecosystem { padding: 64px 24px; }
       .eco-card { padding: 32px; min-height: auto; }
+      .knowledge-vault { padding: 64px 24px; }
+      .vault-grid { grid-template-columns: 1fr; }
       .cta-section { padding: 64px 24px; }
       .cta-content h2 { font-size: 32px; }
       footer { flex-direction: column; gap: 24px; text-align: center; }
@@ -657,6 +763,62 @@
       </div>
     </section>
     
+    <!-- Knowledge Vault -->
+    <section class="knowledge-vault" id="vault">
+      <h2 class="section-title">Knowledge Vault</h2>
+      <p class="vault-subtitle">Curated resources. No fluff. Everything we reference, recommend, and return to.</p>
+      
+      <div class="vault-grid">
+        <!-- AI & Automation -->
+        <div class="vault-category">
+          <div class="vault-cat-header">
+            <span class="vault-cat-icon">🤖</span>
+            <h3>AI & Automation</h3>
+          </div>
+          <div class="vault-links">
+            <a href="https://virtualuncle.com/openclaw-complete-guide-2026/" target="_blank" class="vault-link">
+              <span class="vault-link-title">OpenClaw: Complete 2026 Deep Dive</span>
+              <span class="vault-link-source">virtualuncle.com</span>
+              <span class="vault-link-desc">Full guide — install, cost, hardware, real reviews. The best OpenClaw explainer available.</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Business & Strategy -->
+        <div class="vault-category">
+          <div class="vault-cat-header">
+            <span class="vault-cat-icon">📊</span>
+            <h3>Business & Strategy</h3>
+          </div>
+          <div class="vault-links">
+            <p class="vault-empty">Resources incoming. Stay tuned.</p>
+          </div>
+        </div>
+
+        <!-- Design & Creative -->
+        <div class="vault-category">
+          <div class="vault-cat-header">
+            <span class="vault-cat-icon">🎨</span>
+            <h3>Design & Creative</h3>
+          </div>
+          <div class="vault-links">
+            <p class="vault-empty">Resources incoming. Stay tuned.</p>
+          </div>
+        </div>
+
+        <!-- Development -->
+        <div class="vault-category">
+          <div class="vault-cat-header">
+            <span class="vault-cat-icon">⚡</span>
+            <h3>Development</h3>
+          </div>
+          <div class="vault-links">
+            <p class="vault-empty">Resources incoming. Stay tuned.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- CTA -->
     <section class="cta-section">
       <div class="cta-content">
