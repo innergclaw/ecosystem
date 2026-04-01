@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenClaw Setup in 30 Minutes — InnerG Intel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #ffffff;
+      --bg-secondary: #f8f8f8;
+      --bg-tertiary: #f0f0f0;
+      --text: #0a0a0a;
+      --text-muted: #666666;
+      --text-dim: #999999;
+      --accent: #00cc6a;
+      --accent-dim: #00aa55;
+      --border: #e5e5e5;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: 
+        linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .container { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; padding: 48px 24px; }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 48px;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--accent); }
+
+    /* Header */
+    .guide-header {
+      margin-bottom: 64px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .guide-badge {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 6px 14px;
+      margin-bottom: 24px;
+    }
+    .guide-header h1 {
+      font-size: 48px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .guide-header h1 span { color: var(--accent); }
+    .guide-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .guide-meta-item {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+    }
+
+    /* Steps */
+    .steps { display: flex; flex-direction: column; gap: 0; }
+    .step {
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 32px;
+    }
+    .step-number {
+      font-family: 'Space Mono', monospace;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--bg-tertiary);
+      min-width: 60px;
+      line-height: 1;
+      padding-top: 4px;
+      -webkit-text-stroke: 1px var(--border);
+      color: transparent;
+    }
+    .step-content { flex: 1; }
+    .step-content h2 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+    .step-content p {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-bottom: 16px;
+    }
+    .step-content ul {
+      color: var(--text-muted);
+      font-size: 14px;
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+    .step-content li { margin-bottom: 8px; }
+    .step-content li strong { color: var(--text); }
+    
+    .code-block {
+      background: #1a1a2e;
+      color: #e0e0e0;
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      padding: 20px 24px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 16px 0;
+      line-height: 1.8;
+    }
+    .code-block .comment { color: #6a9955; }
+    .code-block .command { color: #00cc6a; }
+    .code-block .flag { color: #569cd6; }
+
+    .tip-box {
+      background: rgba(0, 204, 106, 0.06);
+      border-left: 3px solid var(--accent);
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .tip-box strong { color: var(--accent-dim); }
+
+    .external-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    .external-link:hover { border-bottom-color: var(--accent); }
+
+    /* CTA Bottom */
+    .guide-cta {
+      margin-top: 64px;
+      padding: 48px;
+      background: var(--text);
+      color: var(--bg);
+      text-align: center;
+    }
+    .guide-cta h2 {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .guide-cta p {
+      color: rgba(255,255,255,0.6);
+      font-size: 15px;
+      margin-bottom: 24px;
+    }
+    .guide-cta a {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--bg);
+      padding: 14px 28px;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .guide-cta a:hover { background: var(--bg); color: var(--text); }
+
+    @media (max-width: 600px) {
+      .guide-header h1 { font-size: 32px; }
+      .step { flex-direction: column; gap: 12px; }
+      .step-number { font-size: 32px; min-width: auto; }
+      .container { padding: 24px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="https://innergeco.online/#vault" class="back-link">
+      ← Back to Knowledge Vault
+    </a>
+
+    <div class="guide-header">
+      <div class="guide-badge">Free Guide • No Coding Required</div>
+      <h1>OpenClaw Setup in <span>30 Minutes</span></h1>
+      <p style="color: var(--text-muted); font-size: 16px; max-width: 550px;">
+        Get your own AI agent running on your Mac. No terminal experience needed. No monthly fees. Just follow the steps.
+      </p>
+      <div class="guide-meta">
+        <span class="guide-meta-item">⏱ 30 MIN READ</span>
+        <span class="guide-meta-item">💻 MACOS</span>
+        <span class="guide-meta-item">🆓 FREE</span>
+        <span class="guide-meta-item">Updated April 2026</span>
+      </div>
+    </div>
+
+    <div class="steps">
+      <!-- Step 1 -->
+      <div class="step">
+        <div class="step-number">01</div>
+        <div class="step-content">
+          <h2>What You're Building</h2>
+          <p>OpenClaw is an AI agent that lives on your machine 24/7. You talk to it through Telegram, WhatsApp, or Discord — and it can browse the web, manage files, send emails, run code, and remember everything across sessions.</p>
+          <p>Think of it like having a smart assistant who never sleeps, has access to your computer, and proactively checks in on things.</p>
+          <div class="tip-box">
+            <strong>Why this matters:</strong> Your data stays local. No third-party server stores your conversations. You own everything.
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step">
+        <div class="step-number">02</div>
+        <div class="step-content">
+          <h2>What You Need</h2>
+          <ul>
+            <li><strong>Mac</strong> (macOS 13 or later)</li>
+            <li><strong>Telegram account</strong> (free — easiest setup)</li>
+            <li><strong>AI API key</strong> — at least one:
+              <ul style="margin-top: 8px;">
+                <li><a href="https://platform.openai.com/api-keys" class="external-link" target="_blank">OpenAI</a> (GPT) — $5 credit on signup</li>
+                <li><a href="https://console.anthropic.com/" class="external-link" target="_blank">Anthropic</a> (Claude) — free tier available</li>
+                <li><a href="https://aistudio.google.com/apikey" class="external-link" target="_blank">Google</a> (Gemini) — free tier available</li>
+              </ul>
+            </li>
+          </ul>
+          <div class="tip-box">
+            <strong>Cost:</strong> The AI model costs pennies per interaction. Expect $2-10/month for casual use. You can also use free models via Ollama (local, zero cost).
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step">
+        <div class="step-number">03</div>
+        <div class="step-content">
+          <h2>Install OpenClaw</h2>
+          <p>Open your Terminal (Cmd + Space → type "Terminal") and run:</p>
+          <div class="code-block">
+            <span class="comment"># Install via npm (requires Node.js)</span><br>
+            <span class="command">npm install -g openclaw</span><br><br>
+            <span class="comment"># If you don't have Node.js:</span><br>
+            <span class="command">brew install node</span><br><br>
+            <span class="comment"># Then install OpenClaw</span><br>
+            <span class="command">npm install -g openclaw</span>
+          </div>
+          <p>That's it. One command and you're in.</p>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step">
+        <div class="step-number">04</div>
+        <div class="step-content">
+          <h2>Connect Your AI Model</h2>
+          <p>Set your API key so OpenClaw knows which AI brain to use:</p>
+          <div class="code-block">
+            <span class="comment"># Set OpenAI key</span><br>
+            <span class="command">openclaw config set</span> <span class="flag">models.openai.key</span> <span class="flag">sk-your-key-here</span><br><br>
+            <span class="comment"># Or Anthropic (Claude)</span><br>
+            <span class="command">openclaw config set</span> <span class="flag">models.anthropic.key</span> <span class="flag">sk-ant-your-key-here</span><br><br>
+            <span class="comment"># Or Google (Gemini)</span><br>
+            <span class="command">openclaw config set</span> <span class="flag">models.google.key</span> <span class="flag">your-key-here</span>
+          </div>
+          <p>You can use multiple providers and switch between them. OpenClaw routes to the best model for each task.</p>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="step">
+        <div class="step-number">05</div>
+        <div class="step-content">
+          <h2>Connect Telegram</h2>
+          <p>The fastest way to interact with your agent. Setup takes 2 minutes:</p>
+          <ul>
+            <li>Open Telegram → search <strong>@BotFather</strong></li>
+            <li>Send <strong>/newbot</strong></li>
+            <li>Name your bot → get the API token</li>
+            <li>Run this in your terminal:</li>
+          </ul>
+          <div class="code-block">
+            <span class="command">openclaw config set</span> <span class="flag">channels.telegram.token</span> <span class="flag">your-bot-token-from-botfather</span><br>
+            <span class="command">openclaw gateway start</span>
+          </div>
+          <p>Your bot is now live. Message it in Telegram and it responds.</p>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="step">
+        <div class="step-number">06</div>
+        <div class="step-content">
+          <h2>Customize Your Agent</h2>
+          <p>OpenClaw creates a workspace folder. This is where your agent's personality, memory, and tools live:</p>
+          <div class="code-block">
+            <span class="comment"># Open your workspace</span><br>
+            <span class="command">open</span> <span class="flag">~/.openclaw/workspace</span><br><br>
+            <span class="comment"># Key files:</span><br>
+            <span class="comment"># SOUL.md     → Your agent's personality</span><br>
+            <span class="comment"># MEMORY.md   → Long-term memory</span><br>
+            <span class="comment"># USER.md     → Info about you</span><br>
+            <span class="comment"># TOOLS.md    → Environment-specific notes</span>
+          </div>
+          <p>Edit <strong>SOUL.md</strong> to define how your agent talks, what it values, and how it behaves. This is where the magic happens — your agent becomes <em>yours</em>.</p>
+        </div>
+      </div>
+
+      <!-- Step 7 -->
+      <div class="step">
+        <div class="step-number">07</div>
+        <div class="step-content">
+          <h2>Test It Out</h2>
+          <p>Try these messages in Telegram to see what your agent can do:</p>
+          <ul>
+            <li><strong>"What's the weather in Philadelphia?"</strong> — real-time data</li>
+            <li><strong>"Search the web for the latest AI news"</strong> — web browsing</li>
+            <li><strong>"Set a reminder for 2pm tomorrow"</strong> — scheduled tasks</li>
+            <li><strong>"Read my desktop and organize the files"</strong> — file management</li>
+            <li><strong>"Create a landing page for my business"</strong> — code generation</li>
+          </ul>
+          <div class="tip-box">
+            <strong>Pro tip:</strong> Your agent gets smarter over time. It remembers conversations, learns your preferences, and builds context. The more you use it, the more powerful it becomes.
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 8 -->
+      <div class="step">
+        <div class="step-number">08</div>
+        <div class="step-content">
+          <h2>Keep It Running 24/7</h2>
+          <p>By default, the gateway stops when you close Terminal. To keep it alive:</p>
+          <div class="code-block">
+            <span class="comment"># Start as a background service</span><br>
+            <span class="command">openclaw gateway start</span> <span class="flag">--daemon</span><br><br>
+            <span class="comment"># Check status</span><br>
+            <span class="command">openclaw gateway status</span><br><br>
+            <span class="comment"># View logs</span><br>
+            <span class="command">openclaw gateway logs</span>
+          </div>
+          <p>For true 24/7 uptime, run OpenClaw on a VPS (DigitalOcean, Linode — $5/mo) or a Raspberry Pi. Same setup, just on a server that never sleeps.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="guide-cta">
+      <h2>Ready to Level Up?</h2>
+      <p>Join the InnerG Intel community for advanced guides, custom skills, and live support.</p>
+      <a href="https://innergeco.online" target="_blank">EXPLORE INNERG INTEL →</a>
+    </div>
+  </div>
+</body>
+</html>
