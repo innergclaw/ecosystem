@@ -5,879 +5,413 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>INNERG INTEL — Become Intelligence</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     :root {
-      --bg: #ffffff;
-      --bg-secondary: #f8f8f8;
-      --bg-tertiary: #f0f0f0;
-      --text: #0a0a0a;
-      --text-muted: #666666;
-      --text-dim: #999999;
-      --accent: #00cc6a;
-      --accent-dim: #00aa55;
-      --border: #e5e5e5;
-      --orange: #ff6b35;
-      --purple: #a855f7;
+      --bg: #000000;
+      --primary: #00ff41;
+      --primary-dim: #00aa2a;
+      --secondary: #ffbf00;
+      --red: #ff3333;
+      --text: #e0e0e0;
+      --text-muted: #888888;
+      --border: #00aa2a;
+      --panel: #0a0a0a;
     }
     
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Share Tech Mono', monospace;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
+      position: relative;
     }
     
-    /* Subtle grid lines */
-    body::after {
+    /* Grid Background */
+    body::before {
       content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       background-image: 
-        linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
-      background-size: 80px 80px;
+        linear-gradient(rgba(0, 255, 65, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 65, 0.08) 1px, transparent 1px);
+      background-size: 60px 60px;
       pointer-events: none;
       z-index: 0;
     }
     
-    .container {
-      position: relative;
+    /* Scanline */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 65, 0.03) 2px,
+        rgba(0, 255, 65, 0.03) 4px
+      );
+      pointer-events: none;
       z-index: 1;
     }
     
-    /* Header */
-    header {
-      padding: 24px 48px;
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    
+    /* LED */
+    .led {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: var(--primary);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--primary);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--primary); }
+      50% { opacity: 0.5; box-shadow: 0 0 5px var(--primary); }
+    }
+    
+    /* NAV */
+    nav {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    
+    nav .container {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid var(--border);
     }
     
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    
-    .logo-mark {
-      width: 48px;
-      height: 48px;
-      border: 2px solid var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    
-    .logo-mark::after {
-      content: '';
-      width: 16px;
-      height: 16px;
-      background: var(--accent);
-    }
-    
-    .logo-text {
-      font-family: 'Space Mono', monospace;
-      font-size: 14px;
+      font-size: 1.5rem;
       font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
       letter-spacing: 4px;
-      text-transform: uppercase;
     }
     
-    .logo-text span {
-      color: var(--accent);
+    .logo span {
+      color: var(--secondary);
     }
     
-    .header-tag {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
+    .nav-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
       color: var(--text-muted);
-      letter-spacing: 2px;
       text-transform: uppercase;
-      padding: 8px 16px;
-      border: 1px solid var(--border);
+      letter-spacing: 2px;
     }
     
-    /* Hero */
+    /* HERO */
     .hero {
-      min-height: 70vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 0 48px;
-      position: relative;
-    }
-    
-    .hero-content {
-      max-width: 900px;
-    }
-    
-    .hero-eyebrow {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      color: var(--accent);
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 32px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    
-    .hero-eyebrow::before {
-      content: '';
-      width: 40px;
-      height: 1px;
-      background: var(--accent);
-    }
-    
-    .hero h1 {
-      font-size: 96px;
-      font-weight: 900;
-      line-height: 0.9;
-      letter-spacing: -4px;
-      margin-bottom: 32px;
-    }
-    
-    .hero h1 .outline {
-      -webkit-text-stroke: 2px var(--text);
-      color: transparent;
-    }
-    
-    .hero h1 .accent {
-      color: var(--accent);
-    }
-    
-    .hero-description {
-      font-size: 18px;
-      color: var(--text-muted);
-      max-width: 500px;
-      line-height: 1.8;
-      margin-bottom: 48px;
-    }
-    
-    .hero-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      background: var(--accent);
-      color: var(--bg);
-      padding: 16px 32px;
-      font-family: 'Space Mono', monospace;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: all 0.3s;
-    }
-    
-    .hero-cta:hover {
-      background: var(--text);
-      color: var(--bg);
-    }
-    
-    .hero-cta svg {
-      transition: transform 0.3s;
-    }
-    
-    .hero-cta:hover svg {
-      transform: translateX(4px);
-    }
-    
-
-    /* Ecosystem Grid */
-    .ecosystem {
-      padding: 96px 48px;
-    }
-    
-    .section-title {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 48px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    
-    .section-title::before {
-      content: '';
-      width: 40px;
-      height: 1px;
-      background: var(--accent);
-    }
-    
-    .ecosystem-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-    }
-    
-    .eco-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      padding: 48px;
-      position: relative;
-      min-height: 280px;
-      display: flex;
-      flex-direction: column;
-      text-decoration: none;
-      color: var(--text);
-      transition: all 0.4s;
-    }
-    
-    .eco-card:hover {
-      background: var(--bg-tertiary);
-      border-color: var(--accent);
-      transform: translateY(-4px);
-    }
-    
-    .eco-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 24px;
-    }
-    
-    .eco-icon {
-      font-size: 32px;
-    }
-    
-    .eco-index {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      color: var(--text-dim);
-      letter-spacing: 2px;
-    }
-    
-    .eco-title {
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -1px;
-      margin-bottom: 16px;
-    }
-    
-    .eco-description {
-      color: var(--text-muted);
-      font-size: 15px;
-      line-height: 1.7;
-      margin-bottom: 24px;
-      max-width: 400px;
-    }
-    
-    .eco-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    
-    .eco-tag {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      padding: 6px 12px;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-    
-    .eco-card:hover .eco-tag {
-      border-color: rgba(0, 204, 106, 0.3);
-    }
-    
-    .eco-arrow {
-      position: absolute;
-      bottom: 48px;
-      right: 48px;
-      width: 48px;
-      height: 48px;
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.4s;
-      opacity: 0;
-    }
-    
-    .eco-card:hover .eco-arrow {
-      opacity: 1;
-      border-color: var(--accent);
-    }
-    
-    /* Knowledge Vault */
-    .knowledge-vault {
-      padding: 96px 48px;
-      background: var(--bg-secondary);
-      border-top: 1px solid var(--border);
-    }
-    
-    .vault-subtitle {
-      color: var(--text-muted);
-      font-size: 16px;
-      max-width: 500px;
-      line-height: 1.7;
-      margin-bottom: 48px;
-    }
-    
-    .vault-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 32px;
-    }
-    
-    .vault-category {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      padding: 32px;
-    }
-    
-    .vault-cat-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 24px;
-      padding-bottom: 16px;
+      padding: 5rem 0;
+      text-align: center;
       border-bottom: 1px solid var(--border);
     }
     
-    .vault-cat-icon {
-      font-size: 24px;
-    }
-    
-    .vault-cat-header h3 {
-      font-family: 'Space Mono', monospace;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 2px;
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+      color: var(--secondary);
+      letter-spacing: 3px;
       text-transform: uppercase;
+      margin-bottom: 2rem;
     }
     
-    .vault-links {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    
-    .vault-link {
-      display: block;
-      padding: 16px;
-      border: 1px solid var(--border);
-      text-decoration: none;
+    .hero h1 {
+      font-size: 3.5rem;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
       color: var(--text);
-      transition: all 0.3s;
-    }
-    
-    .vault-link:hover {
-      border-color: var(--accent);
-      background: var(--bg-secondary);
-      transform: translateX(4px);
-    }
-    
-    .vault-link-title {
-      display: block;
-      font-weight: 600;
-      font-size: 14px;
-      margin-bottom: 4px;
-    }
-    
-    .vault-link:hover .vault-link-title {
-      color: var(--accent);
-    }
-    
-    .vault-link-source {
-      display: block;
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      color: var(--text-dim);
-      letter-spacing: 1px;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      letter-spacing: 4px;
     }
     
-    .vault-link-desc {
-      display: block;
-      font-size: 13px;
+    .hero h1 span {
+      color: var(--primary);
+      text-shadow: 0 0 30px var(--primary);
+    }
+    
+    .hero p {
+      font-size: 1.1rem;
       color: var(--text-muted);
-      line-height: 1.6;
-    }
-    
-    .vault-empty {
-      color: var(--text-dim);
-      font-size: 13px;
-      font-style: italic;
-      padding: 8px 0;
-    }
-
-    /* CTA Section */
-    .cta-section {
-      padding: 96px 48px;
-      background: var(--text);
-      color: var(--bg);
-    }
-    
-    .cta-content {
       max-width: 600px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
     }
     
-    .cta-content h2 {
-      font-size: 48px;
-      font-weight: 900;
-      letter-spacing: -2px;
-      margin-bottom: 24px;
-    }
-    
-    .cta-content p {
-      color: rgba(255,255,255,0.7);
-      font-size: 18px;
-      line-height: 1.8;
-      margin-bottom: 32px;
-    }
-    
-    .cta-buttons {
+    .cta-group {
       display: flex;
-      gap: 16px;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      padding: 1rem 2.5rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-decoration: none;
+      border: 1px solid;
+      transition: all 0.3s;
+      cursor: pointer;
     }
     
     .btn-primary {
-      background: var(--accent);
-      color: var(--bg);
-      padding: 16px 32px;
-      font-family: 'Space Mono', monospace;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: all 0.3s;
+      background: transparent;
+      color: var(--primary);
+      border-color: var(--primary);
     }
     
     .btn-primary:hover {
-      background: var(--bg);
-      color: var(--text);
+      background: var(--primary);
+      color: var(--bg);
+      box-shadow: 0 0 30px var(--primary);
     }
     
     .btn-secondary {
       background: transparent;
-      color: var(--bg);
-      padding: 16px 32px;
-      border: 1px solid rgba(255,255,255,0.3);
-      font-family: 'Space Mono', monospace;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: all 0.3s;
+      color: var(--secondary);
+      border-color: var(--secondary);
     }
     
     .btn-secondary:hover {
-      border-color: var(--accent);
+      background: var(--secondary);
+      color: var(--bg);
+      box-shadow: 0 0 30px var(--secondary);
     }
     
-    /* Footer */
-    footer {
-      padding: 48px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    /* SECTIONS */
+    section {
+      padding: 5rem 0;
+      border-bottom: 1px solid var(--border);
     }
     
-    .footer-text {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      color: var(--text-muted);
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .section-tag {
+      font-size: 0.8rem;
+      color: var(--secondary);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    
+    .section-title {
+      font-size: 2.5rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 1rem;
+    }
+    
+    .section-title span {
+      color: var(--primary);
+    }
+    
+    /* FEATURES GRID */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .feature-card {
+      border: 1px solid var(--border);
+      padding: 2rem;
+      background: var(--panel);
+      transition: all 0.3s;
+    }
+    
+    .feature-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+    }
+    
+    .feature-card h3 {
+      font-size: 1.1rem;
+      color: var(--secondary);
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
       letter-spacing: 2px;
     }
     
-    .footer-links {
-      display: flex;
-      gap: 32px;
-    }
-    
-    .footer-links a {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
+    .feature-card p {
+      font-size: 0.9rem;
       color: var(--text-muted);
-      letter-spacing: 1px;
-      text-decoration: none;
-      transition: color 0.3s;
+      line-height: 1.6;
     }
     
-    .footer-links a:hover {
-      color: var(--accent);
-    }
-    
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .hero h1 { font-size: 64px; }
-      .ecosystem-grid { grid-template-columns: 1fr; }
-    }
-    
-    .ecosystem-counter {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 48px;
-      padding: 0;
-      background: transparent;
-      border: none;
-    }
-    
-    .counter-number {
-      font-size: 64px;
-      font-weight: 800;
-      color: #000000;
-      font-family: 'Inter', sans-serif;
-      line-height: 1;
-      min-width: 80px;
+    /* JOIN PANEL */
+    .join-panel {
       text-align: center;
+      padding: 4rem;
+      border: 1px solid var(--border);
+      background: var(--panel);
     }
     
-    .counter-text {
-      font-size: 24px;
-      font-weight: 600;
-      color: #000000;
+    .join-panel h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+    
+    .join-panel p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    /* FOOTER */
+    footer {
+      padding: 3rem 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
       letter-spacing: 2px;
       text-transform: uppercase;
     }
     
+    /* MOBILE */
     @media (max-width: 768px) {
-      header { padding: 24px; }
-      .hero { padding: 0 24px; }
-      .hero h1 { font-size: 48px; }
-
-      .ecosystem { padding: 64px 24px; }
-      .eco-card { padding: 32px; min-height: auto; }
-      .knowledge-vault { padding: 64px 24px; }
-      .vault-grid { grid-template-columns: 1fr; }
-      .cta-section { padding: 64px 24px; }
-      .cta-content h2 { font-size: 32px; }
-      footer { flex-direction: column; gap: 24px; text-align: center; }
-      .footer-links { flex-direction: column; gap: 16px; }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .section-title {
+        font-size: 1.5rem;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Header -->
-    <header>
-      <div class="logo">
-        <div class="logo-mark"></div>
-        <div class="logo-text">INNERG <span>INTEL</span></div>
+  <nav>
+    <div class="container">
+      <div class="logo">INNERG<span>.</span></div>
+      <div class="nav-status">
+        <span class="led"></span>
+        SYSTEM ONLINE
       </div>
-      <div class="header-tag">Become Intelligence</div>
-    </header>
-    
-    <!-- Hero -->
-    <section class="hero">
-      <div class="hero-content">
-        <div class="hero-eyebrow">Digital Strategy // Creative Vision</div>
-        <h1>BUILD <span class="accent">INTELLIGENCE</span></h1>
-        <p class="hero-description">
-          An ecosystem of tools, education, and content designed to help you master AI, build digital assets, and own your future.
-        </p>
-        <a href="#ecosystem" class="hero-cta">
-          EXPLORE ECOSYSTEM
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </a>
+    </div>
+  </nav>
+  
+  <section class="hero">
+    <div class="container">
+      <div class="hero-tag">
+        <span class="led"></span>
+        AI EDUCATION & DIGITAL STRATEGY
       </div>
-    </section>
-    
-
-    <!-- Ecosystem -->
-    <section class="ecosystem" id="ecosystem">
-      <h2 class="section-title">The Ecosystem</h2>
-      <div class="ecosystem-counter">
-        <span class="counter-number" id="siteCounter">7</span>
-        <span class="counter-text">Active Sites</span>
+      <h1>BECOME<br><span>INTELLIGENCE</span></h1>
+      <p>Master AI. Build systems. Operate at the intersection of creativity and technology. InnerG Intel is where strategists learn to think in systems.</p>
+      <div class="cta-group">
+        <a href="#join" class="btn btn-primary">Access The System</a>
+        <a href="#about" class="btn btn-secondary">Learn More</a>
       </div>
-      <div class="ecosystem-grid">
-        <!-- InnerG Learn -->
-        <a href="https://innergclaw.github.io/innerg-learn/" class="eco-card" target="_blank">
-          <div class="eco-card-header">
-            <div class="eco-icon">🎓</div>
-            <div class="eco-index">01</div>
-          </div>
-          <div>
-            <h3 class="eco-title">InnerG Learn</h3>
-            <p class="eco-description">AI education platform. Courses, tutorials, and resources for mastering AI-powered creation and digital strategy.</p>
-            <div class="eco-tags">
-              <span class="eco-tag">Education</span>
-              <span class="eco-tag">AI</span>
-              <span class="eco-tag">Courses</span>
-            </div>
-          </div>
-          <div class="eco-arrow">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </div>
-        </a>
-        
-        <!-- OwnYourWeb -->
-        <a href="https://innergclaw.github.io/ownyourweb-landing/" class="eco-card" target="_blank">
-          <div class="eco-card-header">
-            <div class="eco-icon">🌐</div>
-            <div class="eco-index">02</div>
-          </div>
-          <div>
-            <h3 class="eco-title">OwnYourWeb</h3>
-            <p class="eco-description">Your website. Your server. Your control. Professional web design, hosting, and infrastructure for serious operators who want to own their digital presence.</p>
-            <div class="eco-tags">
-              <span class="eco-tag">Web Design</span>
-              <span class="eco-tag">Development</span>
-              <span class="eco-tag">Branding</span>
-            </div>
-          </div>
-          <div class="eco-arrow">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </div>
-        </a>
-        
-        <!-- ShopNasGfx -->
-        <a href="https://www.instagram.com/shopnasgfx" class="eco-card" target="_blank">
-          <div class="eco-card-header">
-            <div class="eco-icon">🎨</div>
-            <div class="eco-index">03</div>
-          </div>
-          <div>
-            <h3 class="eco-title">ShopNasGfx</h3>
-            <p class="eco-description">Creative design studio. Logos, branding, graphics, visual identity. Custom work for businesses and creators.</p>
-            <div class="eco-tags">
-              <span class="eco-tag">Design</span>
-              <span class="eco-tag">Branding</span>
-              <span class="eco-tag">Graphics</span>
-            </div>
-          </div>
-          <div class="eco-arrow">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </div>
-        </a>
-        
-        <!-- InnerG Intel YouTube -->
-        <a href="https://youtube.com/@innergintel?si=HbV2zwe0DmvXXarh" class="eco-card" target="_blank">
-          <div class="eco-card-header">
-            <div class="eco-icon">📺</div>
-            <div class="eco-index">04</div>
-          </div>
-          <div>
-            <h3 class="eco-title">InnerG Intel</h3>
-            <p class="eco-description">YouTube education channel. Tutorials, strategies, and deep dives into AI-powered creation and digital strategy.</p>
-            <div class="eco-tags">
-              <span class="eco-tag">Education</span>
-              <span class="eco-tag">Tutorials</span>
-              <span class="eco-tag">AI</span>
-            </div>
-          </div>
-          <div class="eco-arrow">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </div>
-        </a>
-        
-        <!-- InnerG AI Deploy -->
-        <a href="https://innergclaw.github.io/innerg-ai-deploy/" class="eco-card" target="_blank">
-          <div class="eco-card-header">
-            <div class="eco-icon">🤖</div>
-            <div class="eco-index">05</div>
-          </div>
-          <div>
-            <h3 class="eco-title">InnerG AI Deploy</h3>
-            <p class="eco-description">White-glove AI agent deployment. We set up your 24/7 AI assistant — you just use it. No technical knowledge required.</p>
-            <div class="eco-tags">
-              <span class="eco-tag">AI Agents</span>
-              <span class="eco-tag">Automation</span>
-              <span class="eco-tag">Service</span>
-            </div>
-          </div>
-          <div class="eco-arrow">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </div>
-        </a>
-
-        <!-- InnerG Prompt Vault -->
-        <a href="https://innergclaw.gumroad.com/l/InnerGPromptVault" class="eco-card" target="_blank">
-          <div class="eco-card-header">
-            <div class="eco-icon">💎</div>
-            <div class="eco-index">06</div>
-          </div>
-          <div>
-            <h3 class="eco-title">InnerG Prompt Vault</h3>
-            <p class="eco-description">100+ AI prompts that actually work. For creators who actually ship. PDF + Notion template. Stop guessing, start creating.</p>
-            <div class="eco-tags">
-              <span class="eco-tag">Prompts</span>
-              <span class="eco-tag">Digital Product</span>
-              <span class="eco-tag">Creators</span>
-            </div>
-          </div>
-          <div class="eco-arrow">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </div>
-        </a>
-
-        <!-- InnerG Community (Discord) -->
-        <a href="https://buy.stripe.com/aFa4gBdozbOxgFM8hZao80a" class="eco-card" target="_blank">
-          <div class="eco-card-header">
-            <div class="eco-icon">👽💰</div>
-            <div class="eco-index">07</div>
-          </div>
-          <div>
-            <h3 class="eco-title">InnerG Community</h3>
-            <p class="eco-description">Application-gated Discord collective. Curated minds building together. Network with serious operators, get early access to tools, and collaborate on real projects.</p>
-            <div class="eco-tags">
-              <span class="eco-tag">Discord</span>
-              <span class="eco-tag">Network</span>
-              <span class="eco-tag">$10 Access</span>
-            </div>
-          </div>
-          <div class="eco-arrow">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </div>
-        </a>
+    </div>
+  </section>
+  
+  <section id="about">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">[ SYSTEM OVERVIEW ]</div>
+        <h2 class="section-title">WHAT IS <span>INNERG</span>?</h2>
       </div>
-    </section>
-    
-    <!-- Knowledge Vault -->
-    <section class="knowledge-vault" id="vault">
-      <h2 class="section-title">Knowledge Vault</h2>
-      <p class="vault-subtitle">Curated resources. No fluff. Everything we reference, recommend, and return to.</p>
-      
-      <div class="vault-grid">
-        <!-- AI & Automation -->
-        <div class="vault-category">
-          <div class="vault-cat-header">
-            <span class="vault-cat-icon">🤖</span>
-            <h3>AI & Automation</h3>
-          </div>
-          <div class="vault-links">
-            <a href="openclaw-quickstart.html" class="vault-link">
-              <span class="vault-link-title">⭐ Free Quick-Start Guide: OpenClaw in 30 Minutes</span>
-              <span class="vault-link-source">innerg intel • free</span>
-              <span class="vault-link-desc">No coding required. Step-by-step setup guide — install, connect Telegram, customize your agent, and go live. Our most popular resource.</span>
-            </a>
-            <a href="https://virtualuncle.com/openclaw-complete-guide-2026/" target="_blank" class="vault-link">
-              <span class="vault-link-title">OpenClaw: Complete 2026 Deep Dive</span>
-              <span class="vault-link-source">virtualuncle.com</span>
-              <span class="vault-link-desc">Full breakdown — history, architecture, cost, hardware, real reviews. The definitive explainer.</span>
-            </a>
-          </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>AI EDUCATION</h3>
+          <p>Learn to leverage AI as a force multiplier. From prompt engineering to full system automation.</p>
         </div>
-
-        <!-- Business & Strategy -->
-        <div class="vault-category">
-          <div class="vault-cat-header">
-            <span class="vault-cat-icon">📊</span>
-            <h3>Business & Strategy</h3>
-          </div>
-          <div class="vault-links">
-            <p class="vault-empty">Resources incoming. Stay tuned.</p>
-          </div>
+        <div class="feature-card">
+          <h3>DIGITAL STRATEGY</h3>
+          <p>Build businesses and brands that operate 24/7. Systems over hustle.</p>
         </div>
-
-        <!-- Design & Creative -->
-        <div class="vault-category">
-          <div class="vault-cat-header">
-            <span class="vault-cat-icon">🎨</span>
-            <h3>Design & Creative</h3>
-          </div>
-          <div class="vault-links">
-            <p class="vault-empty">Resources incoming. Stay tuned.</p>
-          </div>
-        </div>
-
-        <!-- Development -->
-        <div class="vault-category">
-          <div class="vault-cat-header">
-            <span class="vault-cat-icon">⚡</span>
-            <h3>Development</h3>
-          </div>
-          <div class="vault-links">
-            <p class="vault-empty">Resources incoming. Stay tuned.</p>
-          </div>
+        <div class="feature-card">
+          <h3>CREATIVE EXECUTION</h3>
+          <p>Where vision meets technical capability. Design, build, deploy.</p>
         </div>
       </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta-section">
-      <div class="cta-content">
-        <h2>Ready to Build?</h2>
-        <p>Whether you need AI training, a new website, or just some perspective — we're here. Let's build something together.</p>
-        <div class="cta-buttons">
-          <a href="mailto:innergclaw@gmail.com" class="btn-primary">GET IN TOUCH</a>
-          <a href="https://innergclaw.github.io/innerg-learn/" class="btn-secondary" target="_blank">START LEARNING</a>
+    </div>
+  </section>
+  
+  <section id="features">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">[ CORE MODULES ]</div>
+        <h2 class="section-title">SYSTEM <span>COMPONENTS</span></h2>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>DISCORD ACCESS</h3>
+          <p>Private community of operators, builders, and strategists.</p>
+        </div>
+        <div class="feature-card">
+          <h3>1-ON-1 CLASSES</h3>
+          <p>Personalized AI training sessions tailored to your goals.</p>
+        </div>
+        <div class="feature-card">
+          <h3>WORKSHOPS</h3>
+          <p>Hands-on sessions building real systems and automations.</p>
+        </div>
+        <div class="feature-card">
+          <h3>RESOURCES</h3>
+          <p>Prompts, templates, and systems ready to deploy.</p>
+        </div>
+        <div class="feature-card">
+          <h3>ECOSYSTEM</h3>
+          <p>Connected tools, agents, and platforms for execution.</p>
+        </div>
+        <div class="feature-card">
+          <h3>SUPPORT</h3>
+          <p>Direct access to the InnerG team for guidance.</p>
         </div>
       </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer>
-      <div class="footer-text">© 2026 INNERG INTEL — BECOME INTELLIGENCE</div>
-      <div class="footer-links">
-        <a href="mailto:innergclaw@gmail.com">Email</a>
-        <a href="https://innergclaw.github.io/innerg-learn/">Learn</a>
-        <a href="https://innergclaw.github.io/ownyourweb-landing/">Web</a>
-        <a href="https://youtube.com/@innergintel?si=HbV2zwe0DmvXXarh">YouTube</a>
+    </div>
+  </section>
+  
+  <section id="join">
+    <div class="container">
+      <div class="join-panel">
+        <div class="section-tag">[ ACCESS REQUEST ]</div>
+        <h2>JOIN THE <span>SYSTEM</span></h2>
+        <p>Applications open. We're selective about who joins — quality over quantity.</p>
+        <a href="https://buy.stripe.com/aFa28t70bbOxfBI7dVao80I" class="btn btn-primary">Request Access ($15)</a>
       </div>
-    </footer>
-  </div>
-  <script>
-    // Animated counter
-    function animateCounter() {
-      const counter = document.getElementById('siteCounter');
-      const target = 8;
-      const duration = 2000; // 2 seconds
-      const start = 0;
-      const startTime = performance.now();
-      
-      function updateCounter(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        
-        // Easing function for smooth animation
-        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-        const current = Math.floor(start + (target - start) * easeOutQuart);
-        
-        counter.textContent = current;
-        
-        if (progress < 1) {
-          requestAnimationFrame(updateCounter);
-        } else {
-          counter.textContent = target;
-        }
-      }
-      
-      requestAnimationFrame(updateCounter);
-    }
-    
-    // Start animation when page loads
-    window.addEventListener('load', animateCounter);
-  </script>
+    </div>
+  </section>
+  
+  <footer>
+    <div class="container">
+      <p>© 2026 INNERG INTEL — ALL SYSTEMS OPERATIONAL</p>
+    </div>
+  </footer>
 </body>
 </html>
