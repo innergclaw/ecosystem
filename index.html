@@ -118,6 +118,25 @@
       letter-spacing: 2px;
     }
     
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    
+    .nav-link {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: color 0.3s;
+    }
+    
+    .nav-link:hover {
+      color: var(--primary);
+    }
+    
     /* HERO */
     .hero {
       padding: 5rem 0;
@@ -317,6 +336,10 @@
   <nav>
     <div class="container">
       <div class="logo">INNERG<span>.</span></div>
+      <div class="nav-links">
+        <a href="https://innergclaw.github.io/innerg-ai-program-signup/" class="nav-link">AI PROGRAM</a>
+        <a href="#join" class="nav-link">ACCESS</a>
+      </div>
       <div class="nav-status">
         <span class="led"></span>
         SYSTEM ONLINE
